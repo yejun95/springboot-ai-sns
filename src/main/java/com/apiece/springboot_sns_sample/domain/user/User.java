@@ -46,7 +46,7 @@ public class User {
         return id;
     }
 
-    public String username() {
+    public String getUsername() {
         return username;
     }
 

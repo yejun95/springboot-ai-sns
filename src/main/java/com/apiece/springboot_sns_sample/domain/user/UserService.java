@@ -40,6 +40,12 @@ public class UserService {
                 .orElseThrow(() -> new UserException("User not found with email: " + email));
     }
 
+    public User getByUsername(String username) {
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UserException("User not found with username: " + username));
+    }
+
     public List<User> getAll() {
         return userRepository.findAll();
     }
