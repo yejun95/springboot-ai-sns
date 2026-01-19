@@ -15,16 +15,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String nickname;
 
     private String bio;
@@ -36,8 +35,9 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String password, String nickname) {
+    public User(String email, String username, String password, String nickname) {
         this.email = email;
+        this.username = username;
         this.password = password;
         this.nickname = nickname;
     }

@@ -13,15 +13,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User register(String email, String password, String nickname) {
+    public User register(String email, String username, String password, String nickname) {
         if (userRepository.existsByEmail(email)) {
             throw UserException.emailAlreadyExists(email);
         }
-        User user = new User(email, password, nickname);
+        User user = new User(email, username, password, nickname);
         return userRepository.save(user);
     }
 
     public User signup(String username, String password) {
+        if (userRepository.existsByUsername(username)) {
+            throw new UserException("Username already exists: " + username);
+        }
         String encodedPassword = passwordEncoder.encode(password);
         User user = new User(username, encodedPassword);
         return userRepository.save(user);

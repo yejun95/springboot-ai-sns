@@ -1,5 +1,6 @@
 package com.apiece.springboot_sns_sample.controller;
 
+import com.apiece.springboot_sns_sample.controller.dto.SignupRequest;
 import com.apiece.springboot_sns_sample.controller.dto.UserCreateRequest;
 import com.apiece.springboot_sns_sample.controller.dto.UserResponse;
 import com.apiece.springboot_sns_sample.controller.dto.UserUpdateRequest;
@@ -25,13 +26,13 @@ public class UserController {
 
     @PostMapping("/api/users")
     public ResponseEntity<UserResponse> register(@RequestBody UserCreateRequest request) {
-        User user = userService.register(request.username(), request.password(), request.nickname());
+        User user = userService.register(request.email(), request.username(), request.password(), request.nickname());
         return ResponseEntity.created(URI.create("/api/users/" + user.getId()))
                 .body(UserResponse.from(user));
     }
 
     @PostMapping("/api/v1/users/signup")
-    public ResponseEntity<UserResponse> signupUser(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<UserResponse> signupUser(@RequestBody SignupRequest request) {
         User user = userService.signup(request.username(), request.password());
         return ResponseEntity.created(URI.create("/api/v1/users/" + user.getId()))
                 .body(UserResponse.from(user));
