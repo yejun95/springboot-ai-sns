@@ -19,6 +19,9 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
@@ -28,6 +31,11 @@ public class User {
 
     protected User() {}
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
@@ -36,6 +44,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public String username() {
+        return username;
     }
 
     public String getEmail() {

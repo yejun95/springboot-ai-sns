@@ -4,7 +4,9 @@
       "Bash(./gradlew build:*)",
       "Bash(./gradlew bootRun)",
       "Bash(curl:*)",
-      "Bash(netstat:*)"
+      "Bash(netstat:*)",
+      "Bash(./gradlew bootRun:*)",
+      "Bash(./gradlew.bat bootRun:*)"
     ]
   },
   "hooks": {

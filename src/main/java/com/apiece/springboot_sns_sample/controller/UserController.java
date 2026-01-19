@@ -25,8 +25,15 @@ public class UserController {
 
     @PostMapping("/api/users")
     public ResponseEntity<UserResponse> register(@RequestBody UserCreateRequest request) {
-        User user = userService.register(request.email(), request.password(), request.nickname());
+        User user = userService.register(request.username(), request.password(), request.nickname());
         return ResponseEntity.created(URI.create("/api/users/" + user.getId()))
+                .body(UserResponse.from(user));
+    }
+
+    @PostMapping("/api/v1/users/signup")
+    public ResponseEntity<UserResponse> signupUser(@RequestBody UserCreateRequest request) {
+        User user = userService.signup(request.username(), request.password());
+        return ResponseEntity.created(URI.create("/api/v1/users/" + user.getId()))
                 .body(UserResponse.from(user));
     }
 

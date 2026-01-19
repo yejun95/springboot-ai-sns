@@ -2,6 +2,7 @@ package com.apiece.springboot_sns_sample.domain.user;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,12 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User register(String email, String password, String nickname) {
         if (userRepository.existsByEmail(email)) {
             throw UserException.emailAlreadyExists(email);
         }
         User user = new User(email, password, nickname);
+        return userRepository.save(user);
+    }
+
+    public User signup(String username, String password) {
+        String encodedPassword = passwordEncoder.encode(password);
+        User user = new User(username, encodedPassword);
         return userRepository.save(user);
     }
 
