@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -20,11 +19,7 @@ public class SecurityConfig {
 
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
-
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
+    private final SessionRegistry sessionRegistry;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,9 +32,9 @@ public class SecurityConfig {
                         .failureHandler(authFailureHandler)
                 )
                 .sessionManagement(session -> session
-                        .maximumSessions(2)
-                        .maxSessionsPreventsLogin(false)
-                        .sessionRegistry(sessionRegistry())
+                        .maximumSessions(2) // 최대 세션을 2개까지 허용
+                        .maxSessionsPreventsLogin(false) // 새로운 요청을 받아들이고 기존에 오래된 세션을 끊음
+                        .sessionRegistry(sessionRegistry) // Redis 기반 세션 관리
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
