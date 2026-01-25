@@ -7,6 +7,7 @@ import com.apiece.springboot_sns_sample.controller.dto.UserUpdateRequest;
 import com.apiece.springboot_sns_sample.domain.user.User;
 import com.apiece.springboot_sns_sample.domain.user.UserService;
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,15 @@ public class UserController {
         User user = userService.signup(request.username(), request.password());
         return ResponseEntity.created(URI.create("/api/v1/users/" + user.getId()))
                 .body(UserResponse.from(user));
+    }
+
+    @GetMapping("/api/v1/users/me")
+    public ResponseEntity<UserResponse> getMe(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).build();
+        }
+        User user = userService.getByUsername(principal.getName());
+        return ResponseEntity.ok(UserResponse.from(user));
     }
 
     @GetMapping("/api/users/{id}")

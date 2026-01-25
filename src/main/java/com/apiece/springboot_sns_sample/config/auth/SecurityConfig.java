@@ -1,9 +1,11 @@
 package com.apiece.springboot_sns_sample.config.auth;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.session.SessionRegistry;
@@ -30,6 +32,17 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .successHandler(authSuccessHandler)
                         .failureHandler(authFailureHandler)
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.setCharacterEncoding("UTF-8");
+                            response.getWriter().write("{\"message\":\"로그아웃 성공\"}");
+                        })
+                        .invalidateHttpSession(true)
+                        .deleteCookies("SESSION")
                 )
                 .sessionManagement(session -> session
                         .maximumSessions(2) // 최대 세션을 2개까지 허용
