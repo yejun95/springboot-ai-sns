@@ -57,10 +57,9 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public void delete(Long id) {
-        if (!userRepository.existsById(id)) {
-            throw UserException.notFound(id);
-        }
-        userRepository.deleteById(id);
+        User user = getById(id);
+        user.delete();
     }
 }

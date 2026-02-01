@@ -9,5 +9,25 @@ services:
     command: redis-server --appendonly yes
     restart: unless-stopped
 
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-sns
+    environment:
+      POSTGRES_DB: sns_db
+      POSTGRES_USER: sns_user
+      POSTGRES_PASSWORD: sns_password
+      TZ: Asia/Seoul
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sns_user -d sns_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   redis-data:
+  postgres-data:

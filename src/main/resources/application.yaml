@@ -1,11 +1,36 @@
 spring:
   application:
     name: springboot-sns-sample
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sns_db
+    username: sns_user
+    password: sns_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        use_sql_comments: true
+        highlight_sql: true
+
   data:
     redis:
       host: localhost
       port: 6379
+
   session:
     store-type: redis
     redis:
       namespace: spring:session
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.tool.schema: DEBUG
