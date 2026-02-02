@@ -14,7 +14,18 @@
       "Bash(docker exec:*)",
       "Bash(docker-compose up:*)",
       "Bash(docker-compose ps:*)",
-      "Bash(docker-compose logs:*)"
+      "Bash(docker-compose logs:*)",
+      "Skill(spring-api-rules)",
+      "Skill(codereview)",
+      "Bash(bash auth.sh:*)",
+      "Bash(bash:*)",
+      "Bash(taskkill:*)",
+      "Bash(cmd //c \"taskkill //F //PID 11028\")",
+      "Bash(kill:*)",
+      "Bash(taskkill.exe:*)",
+      "Bash(powershell.exe -Command \"Stop-Process -Id 11028 -Force\")",
+      "Bash(powershell.exe -Command \"Get-Process | Where-Object {$_Path -like ''*java*'' -and $_CommandLine -like ''*bootRun*''} | Select-Object -ExpandProperty Id\")",
+      "Bash(powershell.exe -Command \"Stop-Process -Id 20216 -Force\")"
     ]
   },
   "hooks": {
