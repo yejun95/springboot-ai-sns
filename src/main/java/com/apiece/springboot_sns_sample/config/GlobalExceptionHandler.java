@@ -2,6 +2,7 @@ package com.apiece.springboot_sns_sample.config;
 
 import com.apiece.springboot_sns_sample.controller.dto.ErrorResponse;
 import com.apiece.springboot_sns_sample.domain.follow.FollowException;
+import com.apiece.springboot_sns_sample.domain.like.LikeException;
 import com.apiece.springboot_sns_sample.domain.post.PostException;
 import com.apiece.springboot_sns_sample.domain.quote.QuoteException;
 import com.apiece.springboot_sns_sample.domain.reply.ReplyException;
@@ -62,6 +63,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FollowException.class)
     public ResponseEntity<ErrorResponse> handleFollowException(FollowException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.of(e.getMessage()));
+    }
+
+    @ExceptionHandler(LikeException.class)
+    public ResponseEntity<ErrorResponse> handleLikeException(LikeException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.of(e.getMessage()));
     }
